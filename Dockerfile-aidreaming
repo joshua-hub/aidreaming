@@ -7,10 +7,10 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y python3 python3-p
 # Create non-root user
 USER root
 RUN groupadd -g 5500 appgroup && useradd -u 5500 -g appgroup appuser
-USER appuser
 
 WORKDIR /app
 RUN mkdir -p /app && chown appuser:appgroup /app
+USER appuser
 
 # Configure virtual environment.
 ENV VIRTUAL_ENV=/app/.local/venv
