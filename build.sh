@@ -20,9 +20,9 @@ fi
 
 git clone https://github.com/lllyasviel/Fooocus.git
 
-# move Dockerfile and begin changing the repo
-mv Dockerfile-aidreaming $repos_dir/Fooocus/
-mv requirements_aidreaming.txt $repos_dir/Fooocus/
+# place Dockerfile and requirements to Fooocus directory and begin building the container state
+cp $(pwd)/Dockerfile-aidreaming $repos_dir/Fooocus/
+cp $(pwd)/requirements_aidreaming.txt $repos_dir/Fooocus/
 
 cd $repos_dir/Fooocus
 
