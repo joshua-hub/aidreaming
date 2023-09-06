@@ -83,7 +83,7 @@ fi
 sed -i "s/image_number = gr.Slider(label='Image Number', minimum=1, maximum=32, step=1, value=2)/image_number = gr.Slider(label='Image Number', minimum=1, maximum=32, step=1, value=1)/" ~/repos/Fooocus/webui.py
 
 # Stop the launch script trying to download models
-sed -i "0,/download_models()/{s/download_models()/#download_models()/}" launch.py
+sed -i "s/^download_models()/#download_models()/" launch.py
 
 # enable cuda_malloc() function
 sed -i "s/# cuda_malloc()/cuda_malloc()/" launch.py
