@@ -19,7 +19,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
 
 # Pip configuration and installation of dependencies
 ENV PIP_CACHE_DIR=/app/.local/cache/pip
-COPY requirements_versions.txt /app/
+COPY requirements_aidreaming.txt /app/requirements_versions.txt
 RUN python3 -m pip install -r /app/requirements_versions.txt
 
 # Git clone with specific directory as that is what the original repo did
