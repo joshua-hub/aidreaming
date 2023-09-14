@@ -12,21 +12,36 @@ spec:
       labels:
         app: aidreaming
     spec:
+      volumes:
+        - name: shared-volume
+          emptyDir: {}
       containers:
-      - name: aidreaming-container
-        image: localhost:5000/aidreaming:0.0.1
-        ports:
-        - containerPort: 7680
-        resources:
-          limits:
-            nvidia.com/gpu: 1
+        - name: aidreaming-container
+          image: localhost:5000/aidreaming:0.0.1
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /app/outputs
+          ports:
+            - containerPort: 7680
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+        - name: reaper-container
+          image: reaper:0.0.1
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /app/outputs
+          ports:
+            - containerPort: 443
       imagePullSecrets:
-      - name: registry-secret
+        - name: registry-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: aidreaming-service
+  # labels:
+  #   - user: CERT NAME
 spec:
   selector:
     app: aidreaming

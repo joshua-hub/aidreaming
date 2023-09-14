@@ -5,6 +5,7 @@ log_directory = "/app/outputs/"
 
 def check_log_directory():
     modified_files = []
+    changes_made = False
     for root, dirs, files in os.walk(log_directory):
         for file in files:
             file_path = os.path.join(root, file)
@@ -12,13 +13,11 @@ def check_log_directory():
             current_time = time.time()
             if current_time - modified_time > 3600:
                 modified_files.append(file)
+                changes_made = True
 
-    if modified_files:
-        print("The following file(s) haven't been changed in the last hour:")
-        for file in modified_files:
-            print(file)
-    else:
-        print("All files have been changed recently")
+    if not changes_made:
+        # Here I want a kubectl command to delete this deployment and service
+        print("No changes in the last hour")
 
 while True:
     check_log_directory()
