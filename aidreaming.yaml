@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aidreaming-deployment
+spec:
+  selector:
+    matchLabels:
+      app: aidreaming
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aidreaming
+    spec:
+      containers:
+      - name: aidreaming-container
+        image: localhost:5000/aidreaming:0.0.1
+        ports:
+        - containerPort: 7680
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+      imagePullSecrets:
+      - name: registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aidreaming-service
+spec:
+  selector:
+    app: aidreaming
+  ports:
+    - name: tcp-port
+      protocol: TCP
+      port: 7860
+      targetPort: 7680
