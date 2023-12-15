@@ -4,7 +4,6 @@ import time
 log_directory = "/app/outputs/"
 
 def check_log_directory():
-    modified_files = []
     changes_made = False
     for root, dirs, files in os.walk(log_directory):
         for file in files:
@@ -12,7 +11,6 @@ def check_log_directory():
             modified_time = os.path.getmtime(file_path)
             current_time = time.time()
             if current_time - modified_time > 3600:
-                modified_files.append(file)
                 changes_made = True
 
     if not changes_made:
