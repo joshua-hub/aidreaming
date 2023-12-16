@@ -30,14 +30,15 @@ download_models_from_yaml() {
     local num_entries=$(yq e '.model_files | length' "$yaml_file")
     # Read ignore folders from the YAML file
     local ignore_folders=($(yq e '.ignore_folders[]' "$yaml_file"))
-
+    # Read ignore config_name from the YAML file
+    local ignore_config_names=($(yq e '.ignore_config_name[]' "$yaml_file"))
     echo "Number of Files: $num_entries"
 
     # Download each model, skipping ignored folders
     for ((i = 0; i < num_entries; i++)); do
         local url=$(yq e ".model_files[$i].url" "$yaml_file")
         local folder=$(yq e ".model_files[$i].folder" "$yaml_file")
-
+        local config_name=$(yq e ".model_files[$i].config_name" "$yaml_file")
         # Check if the folder is null or not set
         if [[ -z "$folder" || "$folder" == "null" ]]; then
             echo "Error: Folder name for URL $url is not set in the YAML file."
@@ -49,6 +50,11 @@ download_models_from_yaml() {
             echo "Skipping download for $folder as it is in the ignore list."
             continue
         fi
+
+        # Check if the config_name is in the ignore list
+        if [[ " ${ignore_config_names[*]} " =~ " ${config_name} " ]]; then
+            echo "Skipping download for $config_name as it is in the ignore list."
+        fi 
 
         download_model "$url" "$folder"
     done

@@ -1,29 +1,48 @@
 model_files:
+
+  # General Config according to fooocus doccs 16/12/23
   - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/juggernautXL_version6Rundiffusion.safetensors" 
     folder: "checkpoints"
-    name: "General"
+    config_name: "General"
   
   - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/realisticStockPhoto_v10.safetensors" 
     folder: "checkpoints"
     name: "Realistic"
   - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/SDXL_FILM_PHOTOGRAPHY_STYLE_BetaV0.4.safetensors"
     folder: "loras"
-    name: "Realistic"
+    config_name: "Realistic"
 
   - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/bluePencilXL_v050.safetensors" 
     folder: "checkpoints"
-    name: "Anime"
+    config_name: "Anime"
   - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/DreamShaper_8_pruned.safetensors"
-    name: "Anime"
+    config_name: "Anime"
+    folder: "checkpoints"
   - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/unaestheticXLv31.safetensors"
-    name: "Anime"
+    config_name: "Anime"
     folder: "embeddings"
   - url: "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors"
     folder: loras
-    name: "Anime"
+    config_name: "Anime"
 
   - url: "https://huggingface.co/lllyasviel/fooocus_inpaint/resolve/main/inpaint_v26.fooocus.patch"
     folder: inpaint
-    name: "inpaint_control_model"
+    config_name: "inpaint_control_model"
 
-ignore_folders:
+  ## Basic SDXL (Original Fooocus Specs)
+  - url: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0_0.9vae.safetensors'
+    folder: checkpoints
+    config_name: "Basic"
+  - url: 'https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0_0.9vae.safetensors'
+    folder: checkpoints
+    config_name: "Basic"
+  - url: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors'
+    folder: "loras"
+    config_name: "Basic"
+  ## SDXL Turbo (TODO:)
+  
+ignore_config_name:
+  - "General"
+  - "Realistic"
+  - "Anime"
+  - "inpaint_control_model"
