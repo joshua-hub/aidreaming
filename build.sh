@@ -31,48 +31,19 @@ sleep 5
 read -p "Do you want to download the models? (Type 'yes' to download now (checks if file exists first), 'exit' to interrupt this process): " confirmation
 if [ "$confirmation" = "yes" ]; then
     # Downlaoding models only if they are not already downloaded
-    base_model='https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0_0.9vae.safetensors'
-    if [ -f ~/repos/Fooocus/models/checkpoints/sd_xl_base_1.0_0.9vae.safetensors ]; then 
-        echo "Base model already exists"; 
-    else 
-        echo "Base model does not exist."
-        echo "Downloading to ~/repos/Foocus/models/checkpoints"
-        wget -P ~/repos/Fooocus/models/checkpoints $base_model
-    fi
-
-    refiner_model='https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0_0.9vae.safetensors'
-    if [ -f ~/repos/Fooocus/models/checkpoints/sd_xl_refiner_1.0_0.9vae.safetensors ]; then 
-        echo "refiner model already exists"; 
-    else 
-        echo "refiner model does not exist."
-        echo "Downloading to ~/repos/Foocus/models/checkpoints"
-        wget -P ~/repos/Fooocus/models/checkpoints $refiner_model
-    fi
+    ./model-downloader/downloader.sh --model_yaml ./model-downloader/model_files.yaml --root_path ./models
+fi 
 
 
-    lora_model='https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors'
-    if [ -f ~/repos/Fooocus/models/loras/sd_xl_offset_example-lora_1.0.safetensors ]; then 
-        echo "Lora model already exists"; 
-    else 
-        echo "Lora model does not exist."
-        echo "Downloading to ~/repos/Foocus/models/loras"
-        wget -P ~/repos/Fooocus/models/loras $lora_model
-    fi
-elif [ "$confirmation" = "exit" ]; then
-    echo "Process interrupted. Exiting the script."
-    exit 0
-else
-    echo "Confirmation not received. Skipping the download. This prevent the models being built into the docker image."
-    sleep 5
-fi
 
-
+## I think this Might beable to be done in config or in dockerfile
 # Change the default number of images to generate per prompt to 1
 sed -i "s/image_number = gr.Slider(label='Image Number', minimum=1, maximum=32, step=1, value=2)/image_number = gr.Slider(label='Image Number', minimum=1, maximum=32, step=1, value=1)/" ~/repos/Fooocus/webui.py
-
 # Stop the launch script trying to download models
 sed -i "s/^download_models()/#download_models()/" launch.py
 
+
+## Not Sure if this is still neccessary
 # enable cuda_malloc() function
 sed -i "s/# cuda_malloc()/cuda_malloc()/" launch.py
 

@@ -7,6 +7,8 @@ root_path="models"
 
 
 # Function to download a model file and place it in the appropriate subfolder
+## TODO ADD Name Override function
+
 download_model() {
     local url=$1
     local folder=$2
