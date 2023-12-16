@@ -21,3 +21,4 @@ torch==2.0.1
 packaging==23.1
 torchvision==0.15.2
 xformers==0.0.20
+opencv-contrib-python

@@ -12,7 +12,7 @@ root_path="models"
 download_model() {
     local url=$1
     local folder=$2
-    local file_name=$(basename "$url")
+    local file_name="${3:-$(basename "$url")}"
 
     # Check if the file already exists
     if [ -f "$root_path/$folder/$file_name" ]; then
@@ -41,6 +41,7 @@ download_models_from_yaml() {
         local url=$(yq e ".model_files[$i].url" "$yaml_file")
         local folder=$(yq e ".model_files[$i].folder" "$yaml_file")
         local config_name=$(yq e ".model_files[$i].config_name" "$yaml_file")
+        local file_name_overide=$(yq e ".model_files[$i].file_name" "$yaml_file")
         # Check if the folder is null or not set
         if [[ -z "$folder" || "$folder" == "null" ]]; then
             echo "Error: Folder name for URL $url is not set in the YAML file."
@@ -59,7 +60,12 @@ download_models_from_yaml() {
             continue
         fi 
 
-        download_model "$url" "$folder"
+        # Pass file_name_overide to download_model function if it exists and is not empty or null
+        if [[ -n "$file_name_overide" && "$file_name_overide" != "null" ]]; then
+            download_model "$url" "$folder" "$file_name_overide"
+        else
+            download_model "$url" "$folder"
+        fi
     done
 }
 

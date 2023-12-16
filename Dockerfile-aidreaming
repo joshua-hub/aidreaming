@@ -22,16 +22,16 @@ ENV PIP_CACHE_DIR=/app/.local/cache/pip
 COPY requirements_aidreaming.txt /app/requirements.txt
 RUN python3 -m pip install -r /app/requirements.txt
 
-RUN mkdir -p /app/modules
-RUN mkdir -p /app/models
-
-
+RUN mkdir -p /app/external_models
 
 # Not sure if I should build these into the image or volume mount.
 COPY Fooocus/models /app/models
 COPY Fooocus/modules /app/modules
 COPY Fooocus/ldm_patched /app/ldm_patched
 COPY Fooocus/sdxl_styles /app/sdxl_styles
+COPY Fooocus/javascript /app/javascript
+COPY Fooocus/css /app/css
+COPY Fooocus/extras /app/extras
 # Python program to run in the container
 COPY Fooocus/entry_with_update.py /app/
 COPY Fooocus/fooocus_version.py /app/
@@ -43,8 +43,14 @@ COPY Fooocus/webui.py /app/
 COPY Fooocus/LICENSE /app/
 COPY Fooocus/requirements_versions.txt /app/
 
+## Docker does not support overlays 
+ # Will Symlink Models in /app/external_models into /app/models without overriding contents in /app/models 
+ # on entry 
+COPY sync_models.sh /app/sync_models.sh
 #cache loctions
 ENV MPLCONFIGDIR=/app/.local/cache/matplotlib
 ENV TRANSFORMERS_CACHE=/app/.local/cache/huggingface/hub
+# Currently Having issues with appuser being unable to symlink
+USER root 
 
-ENTRYPOINT [ "python3", "/app/launch.py", "--listen" ]
+#ENTRYPOINT [ "python3", "/app/launch.py", "--listen" ]

@@ -3,46 +3,17 @@ model_files:
   - url: https://huggingface.co/lllyasviel/misc/resolve/main/xlvaeapp.pth
     folder: vae_approx
     config_name: "Required"
-  - url: https://huggingface.co/lllyasviel/misc/resolve/main/vaeapp_sd15.pt ## Needs a name override to vaeapp_sd15.pth 
-    folder: vae_approx
+  - url: https://huggingface.co/lllyasviel/misc/resolve/main/vaeapp_sd15.pt 
+    folder: vae_approx.pth
     config_name: "Required"
+    file_name: "vaeapp_sd15.pth"
   - url: "https://huggingface.co/lllyasviel/misc/resolve/main/xl-to-v1_interposer-v3.1.safetensors"
     folder: vae_approx
     config_name: "Required"
-  - url: "https://huggingface.co/lllyasviel/misc/resolve/main/fooocus_expansion.bin" ## Needs a name override to pytorch_model.bin
-    folder: fooocus_expansion
+  - url: "https://huggingface.co/lllyasviel/misc/resolve/main/fooocus_expansion.bin" 
+    folder: prompt_expansion/fooocus_expansion
     config_name: "Required"
-
-  
-  
-  # General Config according to fooocus doccs 16/12/23
-  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/juggernautXL_version6Rundiffusion.safetensors" 
-    folder: "checkpoints"
-    config_name: "General"
-  
-  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/realisticStockPhoto_v10.safetensors" 
-    folder: "checkpoints"
-    name: "Realistic"
-  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/SDXL_FILM_PHOTOGRAPHY_STYLE_BetaV0.4.safetensors"
-    folder: "loras"
-    config_name: "Realistic"
-
-  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/bluePencilXL_v050.safetensors" 
-    folder: "checkpoints"
-    config_name: "Anime"
-  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/DreamShaper_8_pruned.safetensors"
-    config_name: "Anime"
-    folder: "checkpoints"
-  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/unaestheticXLv31.safetensors"
-    config_name: "Anime"
-    folder: "embeddings"
-  - url: "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors"
-    folder: loras
-    config_name: "Anime"
-
-  - url: "https://huggingface.co/lllyasviel/fooocus_inpaint/resolve/main/inpaint_v26.fooocus.patch"
-    folder: inpaint
-    config_name: "inpaint_control_model"
+    file_name: "pytorch_model.bin"
 
   ## Basic SDXL (Original Fooocus Specs)
   - url: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0_0.9vae.safetensors'
@@ -56,6 +27,37 @@ model_files:
     config_name: "Basic"
   ## SDXL Turbo (TODO:)
   
+
+
+  # General Config according to fooocus doccs 16/12/23
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/juggernautXL_version6Rundiffusion.safetensors" 
+    folder: "checkpoints"
+    config_name: "General"
+  # Realistic Config according to fooocus doccs 16/12/23
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/realisticStockPhoto_v10.safetensors" 
+    folder: "checkpoints"
+    name: "Realistic"
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/SDXL_FILM_PHOTOGRAPHY_STYLE_BetaV0.4.safetensors"
+    folder: "loras"
+    config_name: "Realistic"
+  # Anime  Config according to fooocus doccs 16/12/23
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/bluePencilXL_v050.safetensors" 
+    folder: "checkpoints"
+    config_name: "Anime"
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/DreamShaper_8_pruned.safetensors"
+    config_name: "Anime"
+    folder: "checkpoints"
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/unaestheticXLv31.safetensors"
+    config_name: "Anime"
+    folder: "embeddings"
+  - url: "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors"
+    folder: loras
+    config_name: "Anime"
+  # Inpaint according to fooocus doccs 16/12/23
+  - url: "https://huggingface.co/lllyasviel/fooocus_inpaint/resolve/main/inpaint_v26.fooocus.patch"
+    folder: inpaint
+    config_name: "inpaint_control_model"
+
 ignore_config_name:
   - "General"
   - "Realistic"

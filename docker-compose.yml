@@ -6,12 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile-aidreaming
     volumes:
-      - ./models/checkpoints:/app/models/checkpoints
-      - ./models/embeddings:/app/models/embeddings
-      - ./models/inpaint:/app/models/inpaint
-      - ./models/loras:/app/models/loras
-      - ./models/vae_approx:/app/models/vae_approx
-      - ./models/fooocus_expansion:/app/models/fooocus_expansion
+      - ./models:/app/external_models:ro
+    entrypoint: ["/app/sync_models.sh"]
+    command: ["python3", "/app/launch.py", "--listen"]
     environment:
       - name=value
     ports:
