@@ -47,13 +47,14 @@ download_models_from_yaml() {
         
         # Check if the folder is in the ignore list
         if [[ " ${ignore_folders[*]} " =~ " ${folder} " ]]; then
-            echo "Skipping download for $folder as it is in the ignore list."
+            echo "Skipping download for $url as $folder as it is in the ignore list."
             continue
         fi
 
         # Check if the config_name is in the ignore list
         if [[ " ${ignore_config_names[*]} " =~ " ${config_name} " ]]; then
-            echo "Skipping download for $config_name as it is in the ignore list."
+            echo "Skipping download for $url as $config_name as it is in the ignore list."
+            continue
         fi 
 
         download_model "$url" "$folder"
