@@ -1,8 +1,11 @@
 # Define base image
 FROM ubuntu:jammy-20230804
 
-# Install needed apt software
-RUN apt-get update && apt-get upgrade -y && apt-get install -y python3 python3-pip python3.10-venv git
+# Install python
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip python3.10-venv git && \
+    apt-get clean
 
 # Create non-root user
 USER root
