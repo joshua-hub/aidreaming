@@ -41,6 +41,7 @@ COPY launch.py /app/
 COPY shared.py /app/
 COPY webui.py /app/
 COPY LICENSE /app/
+COPY requirements_versions.txt /app/
 
 #cache loctions
 ENV MPLCONFIGDIR=/app/.local/cache/matplotlib

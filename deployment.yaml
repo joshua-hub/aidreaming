@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aidreaming-webserver
+  namespace: aidreaming
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aidreaming-webserver
+  template:
+    metadata:
+      labels:
+        app: aidreaming-webserver
+    spec:
+      containers:
+      - name: aidreaming-webserver
+        image: aidreaming:0.0.1
+        ports:
+        - containerPort: 7860
+        resources:
+          limits:
+            nvidia.com/gpu: "1"
+        volumeMounts:
+        - name: model-checkpoints-base
+          mountPath: /app/models/checkpoints/sd_xl_base_1.0_0.9vae.safetensors
+        - name: model-checkpoints-refiner
+          mountPath: /app/models/checkpoints/sd_xl_refiner_1.0_0.9vae.safetensors
+        - name: loras-model
+          mountPath: /app/models/loras/sd_xl_offset_example-lora_1.0.safetensors
+      volumes:
+      - name: model-checkpoints-base
+        hostPath:
+          path: /home/zz/MLOPS/Models/fooocus/sd_xl_base_1.0_0.9vae.safetensors
+      - name: model-checkpoints-refiner
+        hostPath:
+          path: /home/zz/MLOPS/Models/fooocus/sd_xl_refiner_1.0_0.9vae.safetensors
+      - name: loras-model
+        hostPath:
+          path: /home/zz/MLOPS/Models/fooocus/sd_xl_offset_example-lora_1.0.safetensors
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aidreaming-service
+  namespace: aidreaming
+spec:
+  selector:
+    app: aidreaming-webserver
+  ports:
+    - name: tcp-port
+      protocol: TCP
+      port: 7869
+      targetPort: 7860
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: mw-aidreaming
+  namespace: aidreaming
+spec:
+  stripPrefix:
+    forceSlash: false
+    prefixes:
+      - /aidreaming
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: aidreaming
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: aidreaming-mw-aidreaming@kubernetescrd
+spec:
+  rules:
+    - host: zzdev
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: aidreaming-service
+              port:
+                number: 7869

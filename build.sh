@@ -1,14 +1,5 @@
 #!/bin/bash
 
-repos_dir=~/repos
-
-if [ -d "$repos_dir" ]; then
-    cd "$repos_dir"
-else
-    mkdir -p "$repos_dir"
-    cd "$repos_dir"
-fi
-
 if git --version >/dev/null 2>&1; then 
     echo "Git is installed, proceding."
 else 
@@ -16,7 +7,6 @@ else
     echo "This script will now install git" 
     sudo apt-get install git
 fi
-
 
 git clone https://github.com/lllyasviel/Fooocus.git
 
@@ -27,8 +17,6 @@ cp $(pwd)/requirements_aidreaming.txt $repos_dir/Fooocus/
 cd $repos_dir/Fooocus
 
 #Pinning to a known working version
-git checkout 09e0d1cb3ae5a1d74443009a41da9f96c1b54683
-
 echo ""
 echo "If you have already downloaded the models separately You will need to interrupt"
 echo "this build process and place them in the right location within the git repo." 
@@ -91,7 +79,7 @@ sed -i "s/# cuda_malloc()/cuda_malloc()/" launch.py
 # build container
 echo "Building the docker image"
 sleep 1
-sudo docker build -f $repos_dir/Fooocus//Dockerfile-aidreaming -t aidreaming:0.0.1 .
+sudo docker build -f $repos_dir/Fooocus/Dockerfile-aidreaming -t aidreaming:0.0.1 .
 
 echo ""
 echo "You can now run the container with"

@@ -1,0 +1,29 @@
+model_files:
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/juggernautXL_version6Rundiffusion.safetensors" 
+    folder: "checkpoints"
+    name: "General"
+  
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/realisticStockPhoto_v10.safetensors" 
+    folder: "checkpoints"
+    name: "Realistic"
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/SDXL_FILM_PHOTOGRAPHY_STYLE_BetaV0.4.safetensors"
+    folder: "loras"
+    name: "Realistic"
+
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/bluePencilXL_v050.safetensors" 
+    folder: "checkpoints"
+    name: "Anime"
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/DreamShaper_8_pruned.safetensors"
+    name: "Anime"
+  - url: "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/unaestheticXLv31.safetensors"
+    name: "Anime"
+    folder: "embeddings"
+  - url: "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors"
+    folder: loras
+    name: "Anime"
+
+  - url: "https://huggingface.co/lllyasviel/fooocus_inpaint/resolve/main/inpaint_v26.fooocus.patch"
+    folder: inpaint
+    name: "inpaint_control_model"
+
+ignore_folders:
