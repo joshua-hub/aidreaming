@@ -10,7 +10,7 @@ services:
     environment:
       - name=value
     ports:
-      - "7860:7860"
+      - "7860:7865"
     deploy:
       resources:
         reservations:

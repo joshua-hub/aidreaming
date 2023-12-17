@@ -23,4 +23,5 @@ link_files_and_dirs /app/external_models /app/models
 
 echo "Symlinking complete"
 # Execute the main command of the container
-python3 /app/launch.py --listen
+echo "Launching Fooocus"
+exec python3 -u /app/launch.py --listen || echo "Python script exited with error code $?"
