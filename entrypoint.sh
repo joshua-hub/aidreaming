@@ -21,5 +21,6 @@ link_files_and_dirs() {
 # Link files and directories from /app/external_models to /app/models
 link_files_and_dirs /app/external_models /app/models
 
+echo "Symlinking complete"
 # Execute the main command of the container
-exec "$@"
+python3 /app/launch.py --listen
